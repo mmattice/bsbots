@@ -17,10 +17,9 @@ class ClientBase(basic.LineReceiver):
         try:
             method = getattr(self,
                              ''.join(('do_', msgtype,
-                                      '_', msgkey.replace(' ', '_'))
+                                      '_', msgkey.replace(' ', '_'))))
         except:
-            print >>self.fh, "Cannot find method for %s %s %s" %
-                                     (msgtype, msgkey, arguments)
+            print >>self.fh, "Cannot find method for %s %s %s" % (msgtype, msgkey, arguments)
         else:
             try:
                 print >>self.fh, "calling %s with %s" % (method, arguments)
