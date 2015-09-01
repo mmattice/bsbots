@@ -1,6 +1,6 @@
 import sys
 
-from twisted.internet import stdio, reactor
+from twisted.internet import reactor
 from twisted.protocols import basic
 
 class ClientBase(basic.LineReceiver):
