@@ -5,6 +5,7 @@ from twisted.protocols import basic
 
 class ClientBase(basic.LineReceiver):
     delimiter = '\n'
+    noisy = True
     fh = sys.stderr
 
     def lineReceived(self, line):
@@ -19,10 +20,12 @@ class ClientBase(basic.LineReceiver):
                              ''.join(('do_', msgtype,
                                       '_', msgkey.replace(' ', '_'))))
         except:
-            print >>self.fh, "Cannot find method for %s %s %s" % (msgtype, msgkey, arguments)
+            if self.noisy:
+                print >>self.fh, "Cannot find method for %s %s %s" % (msgtype, msgkey, arguments)
         else:
             try:
-                print >>self.fh, "calling %s with %s" % (method, arguments)
+                if self.noisy:
+                    print >>self.fh, "calling %s with %s" % (method, arguments)
                 method(*arguments)
             except Exception, e:
                 print >>self.fh, "Exception %s" % e
